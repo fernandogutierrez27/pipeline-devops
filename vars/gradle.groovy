@@ -1,5 +1,6 @@
 def call(parameters) {
-    print('parameters' + parameters)
+    print('stages from params: ' + stages)
+
     env.STAGE = "Paso 1: Build - Test"
     stage("$env.STAGE") {
         sh "echo 'Build && Test!'"
