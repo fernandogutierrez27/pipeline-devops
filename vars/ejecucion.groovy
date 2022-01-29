@@ -39,10 +39,10 @@ def call(){
                 }
                 post{
                     success{
-                        slackSend color: 'good', message: "[Fernando Gutierrez] [${JOB_NAME}] [${BUILD_TAG}] Ejecucion Exitosa", teamDomain: 'dipdevopsusac-tr94431', tokenCredentialId: 'token-slack'
+                        slackSend color: 'good', message: "[Fernando Gutierrez] [${JOB_NAME}] [${BUILD_TAG}] Ejecucion Exitosa", teamDomain: 'dipdevopsusac-tr94431', tokenCredentialId: 'slack-personal'
                     }
                     failure{
-                        slackSend color: 'danger', message: "[Fernando Gutierrez] [${env.JOB_NAME}] [${BUILD_TAG}] Ejecucion fallida en stage [${env.STAGE}]", teamDomain: 'dipdevopsusac-tr94431', tokenCredentialId: 'token-slack'
+                        slackSend color: 'danger', message: "[Fernando Gutierrez] [${env.JOB_NAME}] [${BUILD_TAG}] Ejecucion fallida en stage [${env.STAGE}]", teamDomain: 'dipdevopsusac-tr94431', tokenCredentialId: 'slack-personal'
                     }
                 }
             }
