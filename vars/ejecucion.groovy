@@ -25,7 +25,7 @@ def call(){
             string (
                 name: 'stages',
                 defaultValue: 'all',
-                split: true
+                trim: true
             )
         }
         stages {
