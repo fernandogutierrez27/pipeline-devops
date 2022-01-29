@@ -3,7 +3,8 @@
 	def ejecucion = load 'script.groovy'
 	ejecucion.call()
 */
-def call(){
+def call(parameters){
+    print('parameters' + parameters)
 
     env.STAGE = "Paso 1: Compliar"
     stage("$env.STAGE") {

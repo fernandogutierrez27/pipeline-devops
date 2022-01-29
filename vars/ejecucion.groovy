@@ -22,6 +22,11 @@ def call(){
                 choices: ['Maven', 'Gradle'],
                 description: 'Seleccione herramienta de compilacion'
             )
+            string (
+                name: 'stages',
+                defaultValue: 'all',
+                split: true
+            )
         }
         stages {
             stage("Pipeline"){
@@ -29,10 +34,10 @@ def call(){
                     script{
                         switch(params.compileTool) {
                             case 'Maven':
-                                maven()
+                                maven(stages)
                             break;
                             case 'Gradle':
-                                gradle()
+                                gradle(stages)
                             break;
                         }
                     }
