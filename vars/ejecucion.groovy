@@ -29,12 +29,10 @@ def call(){
                     script{
                         switch(params.compileTool) {
                             case 'Maven':
-                                def ejecucion = load 'maven.groovy'
-                                ejecucion.call()
+                                maven()
                             break;
                             case 'Gradle':
-                                def ejecucion = load 'gradle.groovy'
-                                ejecucion.call()
+                                gradle()
                             break;
                         }
                     }
