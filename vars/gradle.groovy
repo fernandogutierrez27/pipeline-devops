@@ -1,9 +1,12 @@
 def call() {
-    stage("Paso 1: Build && Test"){
+    env.STAGE = "Paso 1: Build - Test"
+    stage("$env.STAGE"){
         sh "echo 'Build && Test!'"
         sh "gradle clean build"
     }
-    stage("Paso 2: Sonar - Análisis Estático"){
+
+    env.STAGE = "Paso 2: Sonar - Análisis Estático"
+    stage("$env.STAGE"){
         sh "echo 'Análisis Estático!'"
         withSonarQubeEnv('SonarQubeUsach') {
             sh "echo 'SonarQube Analysis!'"
@@ -11,11 +14,15 @@ def call() {
             sh 'gradle sonarqube -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build'
         }
     }
-    stage("Paso 3: Curl Springboot Gradle sleep 20"){
+
+    env.STAGE = "Paso 3: Curl Springboot Gradle sleep 20"
+    stage("$env.STAGE"){
         sh "gradle bootRun&"
         sh "sleep 20 && curl -X GET 'http://localhost:8082/rest/mscovid/test?msg=testing'"
     }
-    stage("Paso 4: Subir Nexus"){
+
+    env.STAGE = "Paso 4: Subir Nexus"
+    stage("$env.STAGE"){
         nexusPublisher nexusInstanceId: 'Nexus',
         nexusRepositoryId: 'devops-usach-nexus',
         packages: [
@@ -36,16 +43,22 @@ def call() {
             ]
         ]
     }
-    stage("Paso 5: Descargar Nexus"){
+
+    env.STAGE = "Paso 5: Descargar Nexus"
+    stage("$env.STAGE"){
         withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
             sh 'curl -X GET -u $USER:$PASSWORD https://nexus.devopslab.cl/repository/devops-usach-nexus/com/devopsusach2022/DevOpsUsach2022/${ARTIFACT_VERSION}/DevOpsUsach2022-${ARTIFACT_VERSION}.jar -O'
             sh "ls"
         }
     }
-    stage("Paso 6: Levantar Artefacto Jar"){
+
+    env.STAGE = "Paso 6: Levantar Artefacto Jar"
+    stage("$env.STAGE"){
         sh 'nohup java -jar DevOpsUsach2022-${ARTIFACT_VERSION}.jar & >/dev/null'
     }
-    stage("Paso 7: Testear Artefacto - Dormir(Esperar 20sg) "){
+
+    env.STAGE = "Paso 7: Testear Artefacto - Dormir(Esperar 20sg) "
+    stage("$env.STAGE"){
         sh "sleep 20 && curl -X GET 'http://localhost:8082/rest/mscovid/test?msg=testing'"
     }
 }
