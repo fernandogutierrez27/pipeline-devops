@@ -10,7 +10,7 @@ def call(parameters) {
     env.STAGE = "Paso 2: Sonar - Análisis Estático"
     stage("$env.STAGE") {
         sh "echo 'Análisis Estático!'"
-        withSonarQubeEnv('SonarQubeUsach') {
+        withSonarQubeEnv('SonarQubeUsach<<<<<<<<<<<<<') {
             sh "echo 'SonarQube Analysis!'"
             // Run Maven on a Unix agent.
             sh 'gradle sonarqube -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build'
